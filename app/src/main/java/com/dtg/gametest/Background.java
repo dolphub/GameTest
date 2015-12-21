@@ -11,10 +11,7 @@ public class Background {
     public Background(Bitmap res)
     {
         image = res;
-        System.out.println("IMAGE WIDTH: " + image.getWidth() );
-        System.out.println("IMAGE HEIGHT: " + image.getHeight() );
-        x = 0;
-        y = 0;
+        dx = GamePanel.MOVESPEED;
     }
     public void update()
     {
@@ -31,8 +28,5 @@ public class Background {
             canvas.drawBitmap(image, x+GamePanel.WIDTH, y, null);
         }
     }
-    public void setVector(int dx)
-    {
-        this.dx = dx;
-    }
+
 }
