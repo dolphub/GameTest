@@ -1,4 +1,5 @@
 package com.dtg.gametest;
+
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 
@@ -24,9 +25,10 @@ public class MainThread extends Thread
         long timeMillis;
         long waitTime;
         long totalTime = 0;
-        int frameCount =0;
-        long targetTime = 1000/FPS;
+        int frameCount = 0;
+        long targetTime = 1000 / FPS;
 
+        // main game loop
         while(running) {
             startTime = System.nanoTime();
             canvas = null;
@@ -65,7 +67,7 @@ public class MainThread extends Thread
             if(frameCount == FPS)
             {
                 averageFPS = 1000/((totalTime/frameCount)/1000000);
-                frameCount =0;
+                frameCount = 0;
                 totalTime = 0;
                 System.out.println(averageFPS);
             }
