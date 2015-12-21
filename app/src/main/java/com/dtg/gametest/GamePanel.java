@@ -67,14 +67,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback
             if( !player.getPlaying()) {
                 player.setPlaying(true);
             } else {
-                System.out.println("++++++++++++++++++++");
                 player.setUp(true);
             }
             return true;
         }
 
         if( event.getAction() == MotionEvent.ACTION_UP ) {
-            System.out.println("-------------------");
             player.setUp(false);
             return true;
         }
