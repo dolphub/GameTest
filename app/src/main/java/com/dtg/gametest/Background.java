@@ -13,13 +13,24 @@ public class Background {
         image = res;
         dx = GamePanel.MOVESPEED;
     }
-    public void update()
+    public void update(Player.Direction direction)
     {
-        x+=dx;
-        if(x<-GamePanel.WIDTH){
-            x=0;
+        switch( direction ) {
+            case RIGHT:
+                x += dx;
+                if( x < -GamePanel.WIDTH ) {
+                    x = 0;
+                }
+                break;
+            case LEFT:
+                x -= dx;
+                if( x >  GamePanel.WIDTH ) {
+                    x = GamePanel.WIDTH;
+                }
+                break;
         }
     }
+
     public void draw(Canvas canvas)
     {
         canvas.drawBitmap(image, x, y, null);

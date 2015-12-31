@@ -12,6 +12,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback
     public static final int WIDTH = 1920;
     public static final int HEIGHT = 1080;
     public static final int MOVESPEED = -10;
+    public static final int PLAYER_HEIGHT = 140;
+    public static final int PLAYER_WIDTH = 108;
+    public static final int FLOOR = HEIGHT - 106; // 102 for background floor
+
     private MainThread thread;
     private Player player;
     private Background bg;
@@ -19,7 +23,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback
     public GamePanel(Context context)
     {
         super(context);
-        //add the callback to the surfaceholder to intercept events
+        // add the callback to the surfaceholder to intercept events
         getHolder().addCallback(this);
 
         thread = new MainThread(getHolder(), this);
@@ -67,13 +71,17 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback
             if( !player.getPlaying()) {
                 player.setPlaying(true);
             } else {
-                player.setUp(true);
+                if( event.getX() > GamePanel.WIDTH / 2 ) {
+                    player.move(Player.Direction.RIGHT);
+                } else {
+                    player.move(Player.Direction.LEFT);
+                }
             }
             return true;
         }
 
         if( event.getAction() == MotionEvent.ACTION_UP ) {
-            player.setUp(false);
+            player.move(Player.Direction.NONE);
             return true;
         }
 
@@ -84,20 +92,19 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback
     {
         if( player.getPlaying() ) {
             player.update();
-            bg.update();
+            bg.update(player.getDirection());
         }
     }
+
     @Override
     public void draw(Canvas canvas)
     {
         final float scaleFactorX = getWidth() / (WIDTH * 1.0f);
         final float scaleFactorY = getHeight() / (HEIGHT * 1.0f);
-//        System.out.println("Width: " + getWidth() + " " + scaleFactorX +  "Height: " + getHeight() + " " + scaleFactorY );
 
         if(canvas!=null) {
             final int savedState = canvas.save();
             canvas.scale(scaleFactorX, scaleFactorY);
-//            System.out.println("Canvas X: " + canvas.getWidth());
             bg.draw(canvas);
             player.draw(canvas);
             canvas.restoreToCount(savedState);
